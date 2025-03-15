@@ -9,7 +9,7 @@ module Interpreter.Eval
       
     let readFromConsole () = System.Console.ReadLine().Trim()
     let tryParseInt (str : string) = System.Int32.TryParse str    
-    let rec readInt () = // This doesn't work in rider for some reason? But works in visual studio code.
+    let rec readInt () = 
         let input = readFromConsole()
         let (success, result) = tryParseInt(input)
         match success with
@@ -83,8 +83,6 @@ module Interpreter.Eval
             | Ok x -> setVar v x st
             | Error e -> Error e 
             
-            
-            
         | Seq(s1,s2) ->
             match stmntEval s1 st with
             | Ok st' -> stmntEval s2 st'
@@ -112,19 +110,60 @@ module Interpreter.Eval
         
         | Alloc(x,e) ->
             let size = arithEval e st
-            Result.bind (fun size -> alloc x size st) size
+            size >>= (fun size -> alloc x size st)
             
         | Free (e1,e2) ->
             let ptr = arithEval e1 st 
             let size = arithEval e2 st
             
-            Result.bind (fun ptr2 -> Result.bind (fun size2 -> free ptr2 size2 st) size) ptr
+            ptr >>= (fun ptr2 -> size >>= (fun size2 -> free ptr2 size2 st))
          
         | MemWrite(e1,e2) ->
             
             (arithEval e1 st) >>= (fun x ->
             (arithEval e2 st ) >>= (fun y ->
             setMem x y st ))
-        | _ -> Ok(st)
+        | Print(es, s) -> Ok(st)
+        
+    let split (s1 : string) (s2 : string) = s2 |> s1.Split |> Array.toList
+    let mergeStrings (es : aexpr list) (s : string) (st : state) : Result<string,error> =
+        let s1 = split s " "
+        
+        let rec mergeStringsA (aexprlist : aexpr list) (stringlist : string list) (acc : string list) : Result<string list, error>  =
+            match stringlist with
+                | [] ->  Ok acc
+                | x :: stringlist2 when x = "%"  ->
+                    match aexprlist with
+                    | [] -> Ok acc
+                    | y :: aexprlist2 ->
+                        let expr = arithEval y st
+                        match expr with
+                        | Error e -> Error e
+                        | Ok v -> mergeStringsA aexprlist2 stringlist2 (string v :: acc)
+                | z :: stringlist2 -> mergeStringsA aexprlist stringlist2 (string z :: acc)
+                    
+        
+        let result = (mergeStringsA es s1 [])
+        
+        match result with
+        | Error e -> Error e
+        | Ok x -> Ok (String.concat " " x)
+        
+        
+        
+   
+        
+                   
+            
+                
+                
+                
+                
+            
+            
+        
+        
+        
+        
         
   
