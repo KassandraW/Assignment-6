@@ -72,7 +72,29 @@ module Interpreter.Eval
             (boolEval a st) >>= (fun y -> Ok(not y))
         
             
-      
+    let split (s1 : string) (s2 : string) = s2 |> s1.Split |> Array.toList
+    let mergeStrings (es : aexpr list) (s : string) (st : state) : Result<string,error> =
+        let s1 = split s "%"
+        
+        let rec mergeStringsA (aexprlist : aexpr list) (stringlist : string list) (acc : string list) : Result<string list, error>  =
+            match stringlist with
+                | [] ->  Ok acc
+                | x :: stringlist2 ->
+                    match aexprlist with
+                    | [] -> Ok (List.rev(x :: acc))
+                    | y :: aexprlist2 ->
+                        let expr = arithEval y st
+                        match expr with
+                        | Error e -> Error e
+                        | Ok v -> mergeStringsA aexprlist2 stringlist2 (x + string v :: acc)
+        
+        let result = mergeStringsA es s1 []
+        
+        match result with
+        | Error e -> Error e
+        | Ok x -> Ok (String.concat "" x)
+        
+        
     
     let rec stmntEval s st =
         match s with
@@ -123,33 +145,11 @@ module Interpreter.Eval
             (arithEval e1 st) >>= (fun x ->
             (arithEval e2 st ) >>= (fun y ->
             setMem x y st ))
-        | Print(es, s) -> Ok(st)
-        
-    let split (s1 : string) (s2 : string) = s2 |> s1.Split |> Array.toList
-    let mergeStrings (es : aexpr list) (s : string) (st : state) : Result<string,error> =
-        let s1 = split s " "
-        
-        let rec mergeStringsA (aexprlist : aexpr list) (stringlist : string list) (acc : string list) : Result<string list, error>  =
-            match stringlist with
-                | [] ->  Ok acc
-                | x :: stringlist2 when x = "%"  ->
-                    match aexprlist with
-                    | [] -> Ok acc
-                    | y :: aexprlist2 ->
-                        let expr = arithEval y st
-                        match expr with
-                        | Error e -> Error e
-                        | Ok v -> mergeStringsA aexprlist2 stringlist2 (string v :: acc)
-                | z :: stringlist2 -> mergeStringsA aexprlist stringlist2 (string z :: acc)
-                    
-        
-        let result = (mergeStringsA es s1 [])
-        
-        match result with
-        | Error e -> Error e
-        | Ok x -> Ok (String.concat " " x)
-        
-        
+        | Print(es, s) ->
+            let result = mergeStrings es s st
+            match result with
+            | Error e -> Error e
+            | Ok x -> printfn "%A" x ; Ok st 
         
    
         

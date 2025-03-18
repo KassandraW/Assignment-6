@@ -1,4 +1,4 @@
-// For more information see https://aka.ms/fsharp-console-apps
+module programsss
 
 open Interpreter
 open Interpreter.Programs
@@ -7,14 +7,16 @@ open Interpreter.State
 open Language
 
 
-let runProgram prog =
-    let st = mkState 0 None 
-    let lst = [Num 7; Num 6; Mul (Num 7, Num 6)]
-    let s = "% times % is %, which is the answer to life, the universe, and everything"
+let [<EntryPoint>] main _ =
+    mkState 0 None |> 
+    stmntEval (Print ([Num 7; Num 6; Mul (Num 7, Num 6)], "% times % is %, which is the answer to life, the universe, and everything"))
+    
+    mkState 0 None |> 
+    stmntEval (Print ([Num 7; Num 6; Mul (Num 7, Num 6)],
+                    "% times % is 42, which is the answer to life, the universe, and everything"))
+    0 
     
     
-    printfn "%A" (mergeStrings lst s st) 
-     
 
 // Uncomment the program you want to run
 

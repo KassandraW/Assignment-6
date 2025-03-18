@@ -15,9 +15,20 @@ let listLengthAcc lst : int =
     
     listLengthA lst 0
 
-
-//let sumCont m n =
-    //let rec sumC xs
+let sumCont m n =
+    let rec sumC counter c =
+        match counter with
+        | x when x = n -> c m+n 
+        | _ -> sumC (counter+1) (fun result -> c (result + (m + counter)))
+    sumC 0 id
+    
+let listLengthCont lst : int =
+    let rec listLengthC aLst c =
+        match aLst with
+        | [] -> c 0 
+        | _ :: xs -> listLengthC xs (fun result -> c(result + 1))
+    
+    listLengthC lst id 
     
     
 

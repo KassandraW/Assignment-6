@@ -86,3 +86,33 @@ C:\Users\kassa\Desktop\uni\4_semester\Functional_Programming\Assignment-6\bin\De
 C:\Users\kassa\Desktop\uni\4_semester\Functional_Programming\Assignment-6\obj\Debug\net9.0\Assignme.E1A79761.Up2Date
 C:\Users\kassa\Desktop\uni\4_semester\Functional_Programming\Assignment-6\obj\Debug\net9.0\Assignment6.genruntimeconfig.cache
 C:\Users\kassa\Desktop\uni\4_semester\Functional_Programming\Assignment-6\obj\Debug\net9.0\ref\Assignment6.dll
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\obj\Debug\net9.0\Assignment6.fsproj.AssemblyReference.cache
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\obj\Debug\net9.0\Assignment6.AssemblyInfoInputs.cache
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\obj\Debug\net9.0\Assignment6.AssemblyInfo.fs
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\obj\Debug\net9.0\Assignment6.fsproj.CoreCompileInputs.cache
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\obj\Debug\net9.0\Assignment6.sourcelink.json
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\obj\Debug\net9.0\Assignment6.dll
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\obj\Debug\net9.0\refint\Assignment6.dll
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\obj\Debug\net9.0\Assignment6.pdb
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\bin\Debug\net9.0\Assignment6.exe
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\bin\Debug\net9.0\Assignment6.deps.json
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\bin\Debug\net9.0\Assignment6.runtimeconfig.json
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\bin\Debug\net9.0\Assignment6.dll
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\bin\Debug\net9.0\Assignment6.pdb
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\bin\Debug\net9.0\FSharp.Core.dll
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\bin\Debug\net9.0\cs\FSharp.Core.resources.dll
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\bin\Debug\net9.0\de\FSharp.Core.resources.dll
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\bin\Debug\net9.0\es\FSharp.Core.resources.dll
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\bin\Debug\net9.0\fr\FSharp.Core.resources.dll
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\bin\Debug\net9.0\it\FSharp.Core.resources.dll
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\bin\Debug\net9.0\ja\FSharp.Core.resources.dll
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\bin\Debug\net9.0\ko\FSharp.Core.resources.dll
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\bin\Debug\net9.0\pl\FSharp.Core.resources.dll
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\bin\Debug\net9.0\pt-BR\FSharp.Core.resources.dll
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\bin\Debug\net9.0\ru\FSharp.Core.resources.dll
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\bin\Debug\net9.0\tr\FSharp.Core.resources.dll
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\bin\Debug\net9.0\zh-Hans\FSharp.Core.resources.dll
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\bin\Debug\net9.0\zh-Hant\FSharp.Core.resources.dll
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\obj\Debug\net9.0\Assignme.E1A79761.Up2Date
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\obj\Debug\net9.0\Assignment6.genruntimeconfig.cache
+C:\Users\kassa\Desktop\uni\4_semester\Functional programming\Assignment-6\obj\Debug\net9.0\ref\Assignment6.dll

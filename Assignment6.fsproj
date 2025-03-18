@@ -13,8 +13,8 @@
       <Compile Include="Memory.fs" />
       <Compile Include="State.fs" />
       <Compile Include="Eval.fs" />
-      <Compile Include="Program.fs" />
       <Compile Include="Optional.fs" />
+      <Compile Include="Program.fs" />
     </ItemGroup>
 
 </Project>

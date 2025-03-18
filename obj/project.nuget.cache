@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "BhkbWuDnwJg=",
+  "dgSpecHash": "YXg+lER5utY=",
   "success": true,
-  "projectFilePath": "C:\\Users\\kassa\\Desktop\\uni\\4_semester\\Functional_Programming\\Assignment-6\\Assignment6.fsproj",
+  "projectFilePath": "C:\\Users\\kassa\\Desktop\\uni\\4_semester\\Functional programming\\Assignment-6\\Assignment6.fsproj",
   "expectedPackageFiles": [
-    "C:\\Users\\kassa\\.nuget\\packages\\fsharp.core\\9.0.201\\fsharp.core.9.0.201.nupkg.sha512"
+    "C:\\Users\\kassa\\.nuget\\packages\\fsharp.core\\9.0.100\\fsharp.core.9.0.100.nupkg.sha512"
   ],
   "logs": []
 }
