@@ -4,14 +4,14 @@ module Interpreter.Eval
     open Language
     open State
     
-    let (>>=) x f = x |> Result.bind f
+    let (>>=) x f = x |> bind f
     
       
     let readFromConsole () = System.Console.ReadLine().Trim()
     let tryParseInt (str : string) = System.Int32.TryParse str    
     let rec readInt () = 
         let input = readFromConsole()
-        let (success, result) = tryParseInt(input)
+        let success, result = tryParseInt(input)
         match success with
         |true -> result
         |false-> printfn($"{input} is not an integer") ; readInt() 
@@ -49,10 +49,15 @@ module Interpreter.Eval
             arithEval e1 st >>= fun x -> getMem x st
         | Random -> Ok(random st)
         | Read -> Ok(readInt())
-        | Cond(b,a1,a2) -> Ok(1)
-           
-    
-    let rec boolEval b st =
+        | Cond(b,a1,a2) ->
+           match boolEval b st with
+           | Ok true ->
+               arithEval a1 st
+           | Ok false -> 
+              arithEval a2 st
+           | Error e -> Error e 
+               
+    and boolEval b st =
         match b with
         | TT -> Ok true
         | Eq(a,c) -> (arithEval a st) >>= (fun x ->
@@ -83,33 +88,29 @@ module Interpreter.Eval
                     match aexprlist with
                     | [] -> Ok (List.rev(x :: acc))
                     | y :: aexprlist2 ->
-                        let expr = arithEval y st
-                        match expr with
-                        | Error e -> Error e
-                        | Ok v -> mergeStringsA aexprlist2 stringlist2 (x + string v :: acc)
-        
+                        (arithEval y st) >>= (fun v -> mergeStringsA aexprlist2 stringlist2 (x + string v :: acc))
+                     
         let result = mergeStringsA es s1 []
+        result |> map (String.concat "")         
         
-        match result with
-        | Error e -> Error e
-        | Ok x -> Ok (String.concat "" x)
+    let mergeStrings2 (es : aexpr list) (s : string) (st : state) : Result<string,error> = failwith "not_implemented"
+        //let s1 = split s "%"
         
-        
+        //let rec mergeStringsA (aexprlist : aexpr list) (stringlist : string list) c : Result<string list, error> =
+           //Ok stringlist
+           
+    
     
     let rec stmntEval s st =
         match s with
         | Skip -> Ok st
         | Declare v -> declare v st
-        | Assign(v,a) ->     
-            match arithEval a st with
-            | Ok x -> setVar v x st
-            | Error e -> Error e 
+        | Assign(v,a) ->
+            (arithEval a st) >>= (fun x ->setVar v x st)
             
         | Seq(s1,s2) ->
-            match stmntEval s1 st with
-            | Ok st' -> stmntEval s2 st'
-            | Error e -> Error e
-            
+            (stmntEval s1 st) >>= stmntEval s2
+     
         | If(guard,s1,s2) ->
             match boolEval guard st with
             | Ok x ->
@@ -123,10 +124,7 @@ module Interpreter.Eval
             | Ok x ->
                 match x with
                 | true ->
-                    let eval =  stmntEval s' st
-                    match eval with
-                    | Ok st' -> stmntEval (While(guard,s')) st'
-                    | Error e -> Error e 
+                    (stmntEval s' st) >>= stmntEval(While(guard,s'))
                 | false -> Ok st 
             | Error e -> Error e
         
@@ -141,29 +139,31 @@ module Interpreter.Eval
             ptr >>= (fun ptr2 -> size >>= (fun size2 -> free ptr2 size2 st))
          
         | MemWrite(e1,e2) ->
-            
             (arithEval e1 st) >>= (fun x ->
             (arithEval e2 st ) >>= (fun y ->
             setMem x y st ))
+            
         | Print(es, s) ->
-            let result = mergeStrings es s st
-            match result with
+            let check =
+                let evalList = List.map (fun x -> arithEval x st) es //evaluate each aexpr in the list 
+                let rec evaluate lst = // function to check if each aexpr was successfully evaluated
+                    match lst with
+                    | [] -> Ok 1 
+                    | x :: xs ->
+                        x >>= (fun _ -> evaluate xs)
+                    
+                evaluate evalList
+            
+            match check with
             | Error e -> Error e
-            | Ok x -> printfn "%A" x ; Ok st 
-        
-   
-        
-                   
-            
+            | Ok _ ->
+                let vs = List.map (fun x -> match arithEval x st with
+                                            | Ok x -> x
+                                            | _ -> 0) es
                 
+                let percents = s |> String.filter ((=) '%') |> String.length
                 
-                
-                
-            
-            
-        
-        
-        
-        
-        
-  
+                if vs.Length = percents then 
+                    let result = mergeStrings es s st
+                    result >>= (fun x -> printfn "%A" x ; Ok st)
+                else Error (IllFormedPrint(s, vs))
