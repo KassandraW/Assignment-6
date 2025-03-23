@@ -93,11 +93,22 @@ module Interpreter.Eval
         let result = mergeStringsA es s1 []
         result |> map (String.concat "")         
         
-    let mergeStrings2 (es : aexpr list) (s : string) (st : state) : Result<string,error> = failwith "not_implemented"
-        //let s1 = split s "%"
+    let mergeStrings2 (es : aexpr list) (s : string) (st : state) : Result<string,error> =
+        let s1 = split s "%"
         
-        //let rec mergeStringsA (aexprlist : aexpr list) (stringlist : string list) c : Result<string list, error> =
-           //Ok stringlist
+        let rec mergeStringsA (aexprlist : aexpr list) (stringlist : string list) c=
+          match stringlist with
+                | [] ->  Ok (c stringlist) 
+                | x :: stringlist2 ->
+                    match aexprlist with
+                    | [] -> Ok (c stringlist)
+                    | y :: aexprlist2 ->
+                        (arithEval y st) >>= (fun v -> mergeStringsA aexprlist2 stringlist2 (fun r ->  c (x + string v :: r )))
+                                              
+        let result = mergeStringsA es s1 id 
+        result |> map (String.concat "")                 
+        
+       
            
     
     
@@ -164,6 +175,6 @@ module Interpreter.Eval
                 let percents = s |> String.filter ((=) '%') |> String.length
                 
                 if vs.Length = percents then 
-                    let result = mergeStrings es s st
+                    let result = mergeStrings2 es s st
                     result >>= (fun x -> printfn "%A" x ; Ok st)
                 else Error (IllFormedPrint(s, vs))
